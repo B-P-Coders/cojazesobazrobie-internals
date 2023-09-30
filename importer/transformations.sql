@@ -82,6 +82,11 @@ ALTER table studies ALTER COLUMN run_status TYPE study_status USING (run_status:
 CREATE TYPE title AS enum('licencjat', 'inżynier', 'magister', 'magister inżynier');
 ALTER table studies ALTER COLUMN run_title TYPE title USING (run_title::title);
 
+/* run form */
+UPDATE studies SET run_form='true' WHERE run_form='stacjonarne';
+UPDATE studies SET run_form='false' WHERE run_form='niestacjonarne';
+ALTER table studies ALTER COLUMN run_form TYPE bool USING (run_form::bool);
+
 /* languages */
 SELECT DISTINCT run_lang INTO TABLE languages FROM studies;
 ALTER TABLE languages ADD COLUMN id integer;
