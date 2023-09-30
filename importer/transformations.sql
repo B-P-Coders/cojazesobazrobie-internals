@@ -20,6 +20,7 @@ UPDATE studies SET institution = (SELECT id FROM institutions WHERE institution 
 ALTER TABLE institutions ADD CONSTRAINT institutions_unique_id UNIQUE(id);
 ALTER TABLE studies ALTER COLUMN institution TYPE integer USING (institution::integer);
 ALTER TABLE studies RENAME COLUMN institution TO institution_id;
+ALTER TABLE institutions ADD PRIMARY KEY (id);
 ALTER TABLE studies ADD FOREIGN KEY (institution_id) REFERENCES institutions(id);
 
 /* level */
@@ -40,6 +41,7 @@ UPDATE studies SET isced_id = (SELECT id FROM isced WHERE isced_id = studies.isc
 ALTER TABLE isced ADD CONSTRAINT isced_unique_id UNIQUE(id);
 ALTER TABLE studies ALTER COLUMN isced_id TYPE integer USING (isced_id::integer);
 ALTER TABLE studies DROP COLUMN isced_name;
+ALTER TABLE isced ADD PRIMARY KEY (id);
 ALTER TABLE studies ADD FOREIGN KEY (isced_id) REFERENCES isced(id);
 
 /* status */
@@ -57,6 +59,7 @@ ALTER TABLE cooperators ADD CONSTRAINT cooperators_unique_id UNIQUE(id);
 ALTER TABLE studies ALTER COLUMN cooperator_id TYPE integer USING (cooperator_id::integer);
 ALTER TABLE studies DROP COLUMN cooperator_name;
 ALTER TABLE studies DROP COLUMN ia_abroad_cooperator;
+ALTER TABLE cooperators ADD PRIMARY KEY (id);
 ALTER TABLE studies ADD FOREIGN KEY (cooperator_id) REFERENCES cooperators(id);
 
 /* run name */
@@ -69,6 +72,7 @@ UPDATE studies SET run_name = (SELECT id FROM run_names WHERE run_name = studies
 ALTER TABLE run_names ADD CONSTRAINT run_names_unique_id UNIQUE(id);
 ALTER TABLE studies ALTER COLUMN run_name TYPE integer USING (run_name::integer);
 ALTER TABLE studies RENAME COLUMN run_name TO run_name_id;
+ALTER TABLE run_names ADD PRIMARY KEY (id);
 ALTER TABLE studies ADD FOREIGN KEY (run_name_id) REFERENCES run_names(id);
 
 /* run status */
@@ -88,5 +92,6 @@ UPDATE studies SET run_lang = (SELECT id FROM languages WHERE run_lang = languag
 ALTER TABLE languages ADD CONSTRAINT languages_unique_id UNIQUE(id);
 ALTER TABLE studies ALTER COLUMN run_lang TYPE integer USING (run_lang::integer);
 ALTER TABLE studies RENAME COLUMN run_lang TO lang_id;
+ALTER TABLE languages ADD PRIMARY KEY (id);
 ALTER TABLE studies ADD FOREIGN KEY (lang_id) REFERENCES languages(id);
 ALTER TABLE languages RENAME COLUMN run_lang TO language;
