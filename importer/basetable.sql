@@ -9,7 +9,7 @@ CREATE TABLE
     isced_name character varying (255) NULL,
     create_date date NULL,
     is_for_teacher boolean NULL,
-    language_list character varying (200) NULL,
+    language_list character varying (2000) NULL,
     is_shared boolean NULL,
     status character varying (255) NULL,
     expire_date character varying (255) NULL,
