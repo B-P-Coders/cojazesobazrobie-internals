@@ -2,9 +2,9 @@ import psycopg2
 import csv
 
 conn = psycopg2.connect(
-    database="cojazesobazrobie",
-    user='postgres',
-    password='12345678',
+    database="cojazrobie",
+    user='falke',
+    password='falcon',
     host='localhost',
     port='5432'
 )
@@ -73,8 +73,8 @@ def insert_row(row):
 
 
 
-for i in range(1, 6):
-    with open(f"zestawienie{i}.csv") as datafile:
+for i in range(1, 2):
+    with open(f"zestawienie.csv") as datafile:
         importfile(datafile)
 
 conn.commit()

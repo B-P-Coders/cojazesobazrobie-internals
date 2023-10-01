@@ -58,7 +58,7 @@ UPDATE studies SET cooperator_id = (SELECT id FROM cooperators WHERE cooperator_
 ALTER TABLE cooperators ADD CONSTRAINT cooperators_unique_id UNIQUE(id);
 ALTER TABLE studies ALTER COLUMN cooperator_id TYPE integer USING (cooperator_id::integer);
 ALTER TABLE studies DROP COLUMN cooperator_name;
-ALTER TABLE studies DROP COLUMN ia_abroad_cooperator;
+ALTER TABLE studies DROP COLUMN is_abroad_cooperator;
 ALTER TABLE cooperators ADD PRIMARY KEY (id);
 ALTER TABLE studies ADD FOREIGN KEY (cooperator_id) REFERENCES cooperators(id);
 
@@ -93,10 +93,10 @@ ALTER TABLE languages ADD COLUMN id integer;
 CREATE SEQUENCE languages_id_seq OWNED BY languages.id;
 ALTER TABLE languages ALTER COLUMN id SET DEFAULT nextval('languages_id_seq');
 UPDATE languages SET id = nextval('languages_id_seq');
-UPDATE studies SET run_lang = (SELECT id FROM languages WHERE run_lang = languages.run_lang LIMIT 1);
+ALTER TABLE languages RENAME COLUMN run_lang TO language;
+UPDATE studies SET run_lang = (SELECT id FROM languages WHERE run_lang = languages.language);
 ALTER TABLE languages ADD CONSTRAINT languages_unique_id UNIQUE(id);
 ALTER TABLE studies ALTER COLUMN run_lang TYPE integer USING (run_lang::integer);
 ALTER TABLE studies RENAME COLUMN run_lang TO lang_id;
 ALTER TABLE languages ADD PRIMARY KEY (id);
 ALTER TABLE studies ADD FOREIGN KEY (lang_id) REFERENCES languages(id);
-ALTER TABLE languages RENAME COLUMN run_lang TO language;
